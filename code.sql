@@ -1,7 +1,7 @@
-CREATE DATABASE MaiNhatThanhTam;
+CREATE DATABASE Webnote;
 GO
 
-USE MaiNhatThanhTam;
+USE Webnote;
 GO
 
 CREATE TABLE NguoiDung(
