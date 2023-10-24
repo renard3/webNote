@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Trang chủ</title>
+        <link rel="stylesheet" href="/static/css/main.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css" />
+    
+    </head>
+
+    <body>
+
+        <main class="container-note">
+
+            <nav>
+                <ul>
+                  <li><a href="" class="logo">
+                    <img src="/static/css/logo.png" alt="">
+                    <span class="nav-item">KONote</span>
+                  </a></li>
+          
+                  <li><a href="">
+                    <i class="fas fa-home"></i>
+                    <span class="nav-item">Trang chủ</span>
+                  </a></li>
+          
+                  <li><a href="{{ url_for('ghi_chu') }}">
+                    <i class="fas fa-solid fa-note-sticky"></i>
+                    <span class="nav-item">Ghi chú</span>
+                  </a></li>
+          
+                  <li><a href="{{ url_for('cong_viec') }}">
+                    <i class="fas fa-tasks"></i>
+                    <span class="nav-item">Công việc</span>
+                  </a></li>
+          
+                  <li><a href="{{ url_for('su_kien') }}">
+                    <i class="fas fa-solid fa-calendar-days"></i>
+                    <span class="nav-item">Sự kiện</span>
+                  </a></li>
+          
+                  <li><a href="{{ url_for('dang_nhap') }}" class="logout">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span class="nav-item">Đăng xuất</span>
+                  </a></li>
+          
+                </ul>
+            </nav>
+
+            <section class="main">
+
+                <div class="main-top">
+                    <h1 id="username">Xin chào, {{ current_user.TenNguoiDung }}</h1>
+                </div>
+
+                <div class="list">
+            
+                    <div class="content-index">
+
+                        <ul>
+                            <li class="active">Ghi chú</li>
+                        </ul>
+
+                        <div class="card-container-index">
+
+                            {% for note in ghiChuNguoiDung %}
+
+                                <div class="card">
+
+                                    <h4>{{ note.TieuDe }}</h4>
+                                    <p class="contents">{{ note.NoiDung }}</p>
+                                    <p id="time"><i>{{ thoiGianTruoc(note.NgayTaoGhiChu) }}</i></p>
+                                
+                                </div>
+
+                            {% endfor %}
+
+                        </div>
+
+                    </div>
+
+                    <div class="index">
+
+                        <ul>
+                            <li class="active">Công việc</li>
+                        </ul>
+
+                        <div class="card-todo">
+
+                            {% for task in congViecNguoiDung %}
+
+                                <div class="todo-card">
+
+                                    <h4>{{ task.TieuDe }}</h4>
+
+                                    {% if task.TrangThai == "Hoàn thành" %}
+                                    <p class="green">{{ task.TrangThai }}</p>
+                                    {% endif %}
+
+                                    {% if task.TrangThai == "Đang thực hiện" %}
+                                    <p class="blue">{{ task.TrangThai }}</p>
+                                    {% endif %}
+
+                                </div>
+                                
+                            {% endfor %}
+
+                        </div>
+
+                    </div>
+
+                    <div class="index">
+
+                        <ul>
+                            <li class="active">Sự kiện</li>
+                        </ul>
+
+                        <div class="card-schedule">
+
+                            {% for schedules in suKienNguoiDung %}
+
+                                <div class="schedule-card"> 
+
+                                    <h4 class="white">{{ schedules.TieuDe }}</h4>                        
+                                    <p class="white">Bắt đầu: {{schedules.ThoiGianBatDau}}</p>                        
+                                    <p class="white">Kết thúc: {{schedules.ThoiGianKetThuc}}</p>
+
+                                </div>
+                                
+                            {% endfor %}
+
+                        </div>
+
+                    </div>
+
+                </div>
+                
+            </section>
+        </main>
+    </body>
+</html>

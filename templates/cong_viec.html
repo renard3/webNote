@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Công việc</title>
+        <link rel="stylesheet" href="/static/css/main.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css" />
+    </head>
+
+    <body>
+
+        <main class="container-note">
+            
+            <nav>
+                <ul>
+
+                    <li><a href="" class="logo">
+                        <img src="/static/css/logo.png" alt="">
+                        <span class="nav-item">KONote</span>
+                    </a></li>
+
+                    <li><a href="{{ url_for('trang_chu') }}">
+                        <i class="fas fa-home"></i>
+                        <span class="nav-item">Trang chủ</span>
+                    </a></li>
+
+                    <li><a href="{{ url_for('ghi_chu') }}">
+                        <i class="fas fa-solid fa-note-sticky"></i>
+                        <span class="nav-item">Ghi chú</span>
+                    </a></li>
+
+                    <li><a href="">
+                        <i class="fas fa-tasks"></i>
+                        <span class="nav-item">Công việc</span>
+                    </a></li>
+
+                    <li><a href="{{ url_for('su_kien') }}">
+                        <i class="fas fa-solid fa-calendar-days"></i>
+                        <span class="nav-item">Sự kiện</span>
+                    </a></li>
+
+                    <li><a href="{{ url_for('dang_nhap') }}" class="logout">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span class="nav-item">Đăng xuất</span>
+                    </a></li>
+
+                </ul>
+            </nav>
+
+            <div class="content-task">
+
+                <div class="top">
+                    <h1>Công việc</h1>
+                </div>
+
+                <div class="task-container">
+
+                    {% for task in congViecNguoiDung %}
+
+                    <div class="task">
+                        
+                        <h4>{{ task.TieuDe }}</h4>
+                        
+                        {% if task.TrangThai == "Hoàn thành" %}
+                        
+                        <p class="green">{{ task.TrangThai }}</p>
+                        
+                        {% endif %}
+                        
+                        {% if task.TrangThai == "Đang thực hiện" %}
+                        
+                        <p class="blue">{{ task.TrangThai }}</p>
+                        
+                        {% endif %}
+                        
+                        <button class="edit-task-button blue" onclick="editTask('{{ task.TieuDe }}', '{{ task.MaCongViec }}', '{{ task.TrangThai }}')"><i class="fa-solid fa-pencil"></i></button>
+                        
+                        <form method="POST" action="{{ url_for('xoa_cong_viec', ma_cong_viec=task.MaCongViec) }}" class="delete-task-form">
+                            <button type="submit" class="delete-task red"><i class="fa-solid fa-x"></i></button>
+                        </form>
+
+                    </div>
+
+                    {% endfor %}
+                                    
+                </div>
+
+                <form method="POST" action="{{ url_for('cong_viec') }}" class="form-add-task">
+                    
+                    <input type="hidden" id="action" name="action" value="add">
+                    <input type="hidden" id="ma_ghi_chu" name="ma_cong_viec" value="">
+
+                    <input type="text" id="task-title" name="tieu_de" placeholder="Nhập tiêu đề" required>
+                    
+                    <!-- Radio buttons for task status -->
+                    
+                    <div id="task-status">
+                        <!-- These radio buttons will be dynamically generated when editing -->
+                    </div>
+                    
+                    <button class="bg-green white" type="submit" id="create-task"><i class="fa-solid fa-plus"></i> Thêm mới</button>
+
+                    <button type="submit" class="save-note-button bg-green white" style="display: none;"><i class="fa-solid fa-check"></i> Lưu</button>
+                    <button class="bg-red white" type="button" id="reset-note" style="display: none;" onclick="cancelEdit()"><i class="fa-solid fa-x"></i> Hủy bỏ</button>
+                
+                </form>
+                
+            </div>
+            
+        </main>
+
+        <script>
+            
+            // Function to enable editing a task
+            function editTask(tieuDe, maCongViec, trangThai) {
+                const form = document.querySelector('.form-add-task');
+                const taskTitleInput = form.querySelector('#task-title');
+                const actionInput = form.querySelector('#action');
+                const maGhiChuInput = form.querySelector('#ma_ghi_chu');
+                const createButton = form.querySelector('#create-task');
+                const saveButton = form.querySelector('.save-note-button');
+                const resetButton = form.querySelector('#reset-note');
+                const taskStatusDiv = form.querySelector('#task-status');
+
+                taskTitleInput.value = tieuDe;
+                actionInput.value = 'save';
+                maGhiChuInput.value = maCongViec;
+
+                // Dynamically generate radio buttons for task status
+                taskStatusDiv.innerHTML = `
+                    <label class="green"><input type="radio" name="trang_thai" value="Hoàn thành" ${trangThai === 'Hoàn thành' ? 'checked' : ''}> Hoàn thành</label>
+                    <label class="blue"><input type="radio" name="trang_thai" value="Đang thực hiện" ${trangThai === 'Đang thực hiện' ? 'checked' : ''}> Đang thực hiện</label>
+                `;
+
+                // Toggle button visibility
+                createButton.style.display = 'none';
+                saveButton.style.display = 'inline-block';
+                resetButton.style.display = 'inline-block';
+            }
+
+            // Function to cancel editing and reset form
+            function cancelEdit() {
+                const form = document.querySelector('.form-add-task');
+                const taskTitleInput = form.querySelector('#task-title');
+                const actionInput = form.querySelector('#action');
+                const maGhiChuInput = form.querySelector('#ma_ghi_chu');
+                const createButton = form.querySelector('#create-task');
+                const saveButton = form.querySelector('.save-note-button');
+                const resetButton = form.querySelector('#reset-note');
+                const taskStatusDiv = form.querySelector('#task-status');
+
+                taskTitleInput.value = '';
+                actionInput.value = 'add';
+                maGhiChuInput.value = '';
+
+                // Clear dynamically generated radio buttons for task status
+                taskStatusDiv.innerHTML = '';
+
+                // Toggle button visibility
+                createButton.style.display = 'inline-block';
+                saveButton.style.display = 'none';
+                resetButton.style.display = 'none';
+            }
+
+        </script>
+
+    </body>
+</html>

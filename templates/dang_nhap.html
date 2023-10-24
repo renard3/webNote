@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <title>Đăng nhập</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css" />
+</head>
+<body>
+
+    <header class="header">
+        <a href="" class="logo">
+            <img src="/static/css/logo.png" alt="">
+            <span class="nav-item">KONote</span>
+        </a>
+    </header>
+
+    <div class="container-custom">
+
+        <div class="container-title">
+            <h1 class="title">
+                QUẢN LÝ <br />
+                GHI CHÚ CÁ NHÂN<br />
+                CỦA BẠN
+            </h1>
+        </div>
+
+        <form method="POST">
+
+            <h1>Đăng nhập</h1>
+
+                {% with messages = get_flashed_messages(with_categories=true) %} {% if
+                messages %}
+
+                <ul>
+                    {% for category, message in messages %}
+                    <li style="color: red; margin-left: 20px; margin-top: 50px;" class="{{ category }}">{{ message }}</li>
+                    {% endfor %}
+                </ul>
+
+                {% endif %} {% endwith %}
+
+            <div class="form-input">
+                <label for="email"><i class="fas fa-solid fa-envelope"></i></label>
+                <input type="text" name="email" required placeholder="Nhập email của bạn" />
+            </div>
+
+            <div class="form-input">
+                <label for="mat_khau"><i class="fas fa-solid fa-lock"></i></label>
+                <input type="password" name="mat_khau" required placeholder="Nhập mật khẩu" />
+            </div>
+
+            <input type="submit" value="Đăng nhập" />
+
+            <div class="redirect">
+                <p>Chưa có tài khoản? <a href="{{ url_for('dang_ky') }}">Đăng ký</a></p>
+            </div>
+        </form>
+    </div>
+
+</body>
+</html>

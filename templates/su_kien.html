@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Lịch Sự Kiện</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css"/>
+    </head>
+
+    <body>
+
+        <main class="container-note">
+
+            <nav>
+                <ul>
+                    <li><a href="" class="logo">
+                        <img src="/static/css/logo.png" alt="">
+                        <span class="nav-item">KONote</span>
+                    </a></li>
+
+                    <li><a href="{{ url_for('trang_chu') }}">
+                        <i class="fas fa-home"></i>
+                        <span class="nav-item">Trang chủ</span>
+                    </a></li>
+
+                    <li><a href="{{ url_for('ghi_chu') }}">
+                        <i class="fas fa-solid fa-note-sticky"></i>
+                        <span class="nav-item">Ghi chú</span>
+                    </a></li>
+
+                    <li><a href="{{ url_for('cong_viec') }}">
+                        <i class="fas fa-tasks"></i>
+                        <span class="nav-item">Công việc</span>
+                    </a></li>
+
+                    <li><a href="">
+                        <i class="fas fa-solid fa-calendar-days"></i>
+                        <span class="nav-item">Sự kiện</span>
+                    </a></li>
+
+                    <li><a href="{{ url_for('dang_nhap') }}" class="logout">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span class="nav-item">Đăng xuất</span>
+                    </a></li>
+
+                </ul>
+            </nav>
+
+            <div class="container-event">
+
+                <div class="top">
+                    <h1>Sự kiện</h1>
+                </div>
+
+                <div class="schedules-container">
+
+                    {% for schedules in suKienNguoiDung %}
+
+                    <div class="schedules">
+                        
+                        <h4 class="white">{{ schedules.TieuDe }}</h4>
+                        <p class="white">Bắt đầu: {{schedules.ThoiGianBatDau}}</p>
+                        <p class="white">Kết thúc: {{schedules.ThoiGianKetThuc}}</p>
+                        
+                        <form method="POST" action="{{ url_for('xoa_su_kien', ma_su_kien=schedules.MaSuKien) }}" class="delete-event-form">
+
+                            <button type="submit" class="delete-event red">
+                            <i class="fa-solid fa-x"></i>
+                            </button>
+
+                        </form>
+                    </div>
+
+                    {% endfor %}
+
+                </div>
+
+                <div class="calendar">
+                    <div class="calendar-header">
+
+                        <button id="prev-month">
+                            <i class="fa-solid fa-chevron-left"></i>
+                        </button>
+
+                        <h1 id="current-month-year">Tháng Năm</h1>
+
+                        <button id="next-month">
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </button>
+
+                    </div>
+
+                    <button id="add-event-button">Thêm sự kiện</button>
+                    <table id="calendar-table"></table>
+
+                </div>
+
+                <div class="event-form" id="event-form">
+                    
+                    <h2>Thêm sự kiện</h2>
+                    
+                    <button id="close-event-form" onclick="hideEventForm()">
+                    <i class="fas fa-times"></i>
+                    </button>
+
+                    <form id="add-event-form" method="POST" action="{{ url_for('su_kien') }}">
+                    
+                        <input type="text" id="event-title" name="tieu_de" placeholder="Tiêu đề" required/>
+                        <input type="date" id="event-start" name="thoi_gian_bat_dau" required/>
+                        <input type="date" id="event-end" name="thoi_gian_ket_thuc" required/>
+                    
+                        <button type="submit">Lưu</button>
+
+                    </form>
+
+                </div>
+
+            </div>
+        
+        </main>
+
+        <script>
+
+            function hideEventForm() {
+                const eventForm = document.getElementById('event-form');
+                eventForm.style.display = 'none';
+            }
+
+            const currentDate = new Date();
+
+            let currentYear = currentDate.getFullYear();
+            let currentMonth = currentDate.getMonth();
+                
+            document.getElementById('prev-month').addEventListener('click', () => {
+                    
+                currentMonth--;
+                    
+                if (currentMonth < 0) {
+                        currentMonth = 11;
+                        currentYear--;
+                }
+                    
+                renderCalendar(currentYear, currentMonth);
+                
+            });
+
+            document.getElementById('next-month').addEventListener('click', () => {
+                    
+                currentMonth++;
+                    
+                if (currentMonth > 11) {
+                    currentMonth = 0;
+                    currentYear++;
+                    
+                }
+                    
+                renderCalendar(currentYear, currentMonth);
+                
+            });
+
+            document.getElementById('add-event-button').addEventListener('click', () => {
+                showEventForm();
+            });
+
+            function showEventForm() {
+
+                const eventForm = document.getElementById('event-form');
+                eventForm.style.display = 'block';
+
+            }
+
+            function hideEventForm() {
+                    
+                const eventForm = document.getElementById('event-form');
+                eventForm.style.display = 'none';
+                
+            }
+
+            renderCalendar(currentYear, currentMonth);
+                        
+            function renderCalendar(year, month) {
+                            
+                const calendarTable = document.getElementById('calendar-table');
+
+                calendarTable.innerHTML = '';
+                            
+                var suKienNguoiDung = {{ suKienNguoiDung|tojson }};
+                            
+                const monthYearHeader = document.getElementById('current-month-year');
+                const monthNames = ["Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "Tháng 5", "Tháng 6", "Tháng 7", "Tháng 8", "Tháng 9", "Tháng 10", "Tháng 11", "Tháng 12"];
+                            
+                monthYearHeader.textContent = `${monthNames[month]} ${year}`;
+
+                const daysInMonth = new Date(year, month + 1, 0).getDate();
+                const firstDayOfMonth = new Date(year, month, 1).getDay();
+                const calendarHeader = document.createElement('thead');
+                const dayNames = ["CN", "T2", "T3", "T4", "T5", "T6", "T7"];
+
+                const headerRow = document.createElement('tr');
+                            
+                dayNames.forEach(dayName => {
+                                
+                    const headerCell = document.createElement('th');
+                    headerCell.textContent = dayName;
+                    headerRow.appendChild(headerCell);
+                            
+                });
+
+                calendarHeader.appendChild(headerRow);
+                calendarTable.appendChild(calendarHeader);
+
+                let date = 1;
+                            
+                for (let i = 0; i < 6; i++) {
+                                
+                    const row = document.createElement('tr');
+                                
+                    for (let j = 0; j < 7; j++) {
+                                    
+                        const cell = document.createElement('td');
+                                    
+                        if (i === 0 && j < firstDayOfMonth) {                                    
+                            cell.textContent = '';                               
+                        } 
+                        
+                        else if (date <= daysInMonth) {
+                                        
+                            cell.textContent = date;
+                            cell.classList.add('calendar-day');
+                            cell.setAttribute('data-date', date);
+
+                            date++;
+                        }
+                                    
+                        row.appendChild(cell);
+                                
+                    }
+                                
+                    calendarTable.appendChild(row);
+                            
+                }
+        
+                let eventTitles = {};
+        
+                suKienNguoiDung.forEach((suKien) => {
+            
+                    const startDate = new Date(suKien.ThoiGianBatDau);
+                    const endDate = new Date(suKien.ThoiGianKetThuc);
+                    const startMonth = startDate.getMonth();
+                    const startYear = startDate.getFullYear();
+                    const endMonth = endDate.getMonth();
+
+                    for (let i = startDate.getDate(); i <= endDate.getDate(); i++) {
+                
+                        const cell = calendarTable.querySelector(`[data-date="${i}"]`);
+                
+                        if (cell) {
+                    
+                            const cellDate = new Date(year, month, i);
+                    
+                            if (cellDate.getMonth() === startMonth && cellDate.getFullYear() === startYear) {
+                        
+                                if (!eventTitles[i]) {
+                                eventTitles[i] = [];
+                            
+                            }
+                        
+                            if (!eventTitles[i].includes(suKien.TieuDe)) {                         
+                                eventTitles[i].push(suKien.TieuDe);                      
+                            }
+
+                        }
+                
+                    }
+            
+                }
+        
+            });
+
+            Object.keys(eventTitles).forEach((day) => {
+            
+                const cell = calendarTable.querySelector(`[data-date="${day}"]`);
+            
+                if (cell) {
+                
+                    const eventTitleElement = document.createElement('div');
+                    
+                    eventTitleElement.classList.add('event-title');
+                    eventTitleElement.textContent = eventTitles[day].join(' | '); 
+                    
+                    cell.appendChild(eventTitleElement);
+
+                    cell.classList.add('event-day');
+            
+                }
+        
+            });
+        }
+        
+        </script>
+
+    </body>
+</html>

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Ghi chú</title>
+        <link rel="stylesheet" href="/static/css/main.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css" />
+    </head>
+
+    <body>
+
+        <main class="container-note">
+
+            <nav>
+                <ul>
+                    <li><a href="" class="logo">
+                        <img src="/static/css/logo.png" alt="">
+                        <span class="nav-item">KONote</span>
+                    </a></li>
+            
+                    <li><a href="{{ url_for('trang_chu') }}">
+                        <i class="fas fa-home"></i>
+                        <span class="nav-item">Trang chủ</span>
+                    </a></li>
+            
+                    <li><a href="">
+                        <i class="fas fa-solid fa-note-sticky"></i>
+                        <span class="nav-item">Ghi chú</span>
+                    </a></li>
+            
+                    <li><a href="{{ url_for('cong_viec') }}">
+                        <i class="fas fa-tasks"></i>
+                        <span class="nav-item">Công việc</span>
+                    </a></li>
+            
+                    <li><a href="{{ url_for('su_kien') }}">
+                        <i class="fas fa-solid fa-calendar-days"></i>
+                        <span class="nav-item">Sự kiện</span>
+                    </a></li>
+            
+                    <li><a href="{{ url_for('dang_nhap') }}" class="logout">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span class="nav-item">Đăng xuất</span>
+                    </a></li>
+        
+                </ul>
+            </nav>
+
+            <div class="content-note">
+
+                <div class="top">
+                    <h1>Ghi chú</h1>
+                </div>
+
+                <div class="note-container">
+
+                    {% for note in ghiChuNguoiDung %}
+
+                    <!-- thêm mã định danh cho các phần tử -->
+                    <div class="note" data-note-id="{{ note.MaGhiChu }}">
+
+                        <h4>{{ note.TieuDe }}</h4>
+                        <p class="content">{{ note.NoiDung }}</p>
+                        <p id="time"><i>{{ thoiGianTruoc(note.NgayTaoGhiChu) }}</i></p>
+
+                        <button class="edit-note-button blue"><i class="fa-solid fa-pencil"></i></button>
+
+                        <form method="POST" action="{{ url_for('xoa_ghi_chu', ma_ghi_chu=note.MaGhiChu) }}" class="delete-note-form">
+                            <button type="submit" class="delete-note red"><i class="fa-solid fa-x"></i></button>
+                        </form>
+
+                    </div>
+
+                    {% endfor %}
+                
+                </div>
+
+                <form method="POST" action="{{ url_for('ghi_chu') }}" class="form-add-note">
+
+                    <input type="hidden" id="action" name="action" value="add">
+                    <input type="hidden" id="ma_ghi_chu" name="ma_ghi_chu" value="">
+
+                    <input type="text" id="note-title" name="tieu_de" placeholder="Nhập tiêu đề" required>
+
+                    <textarea name="noi_dung" id="note-content" placeholder="Nội dung ghi chú" required></textarea>
+                    <br>
+                    
+                    <button class="bg-green white" type="submit" id="add-note-button"><i class="fa-solid fa-plus"></i>Thêm</button>
+
+                    <button type="submit" class="save-note-button bg-green white" style="display: none;"><i class="fa-solid fa-check"></i> Lưu</button>
+                    <button type="button" class="bg-red white" id="reset-note" style="display: none;"><i class="fa-solid fa-x"></i> Hủy bỏ</button>
+                
+                </form>
+
+            </div>
+            
+        </main>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+
+                const editButtons = document.querySelectorAll('.edit-note-button');
+                const noteTitleInput = document.getElementById('note-title');
+                const noteContentTextarea = document.getElementById('note-content');
+                const saveNoteButton = document.querySelector('.save-note-button');
+                const resetNoteButton = document.getElementById('reset-note');
+                const addNoteButton = document.getElementById('add-note-button'); 
+
+                saveNoteButton.style.display = 'none';
+                resetNoteButton.style.display = 'none';
+
+                addNoteButton.addEventListener('click', function () {
+                    document.getElementById('action').value = 'add'; 
+                });
+
+                // Thêm sự kiện click cho nút "Lưu"
+                saveNoteButton.addEventListener('click', function () {
+                    document.getElementById('action').value = 'save'; 
+                });
+
+                editButtons.forEach((button) => {
+
+                    button.addEventListener('click', function () {
+
+                        const noteCard = button.closest('.note');
+                        const title = noteCard.querySelector('h4').textContent;
+                        const content = noteCard.querySelector('p').textContent;
+                        const maGhiChu = noteCard.getAttribute('data-note-id'); 
+
+                        noteTitleInput.value = title;
+                        noteContentTextarea.value = content;
+                        document.getElementById('ma_ghi_chu').value = maGhiChu;
+
+                        editButtons.forEach((btn) => {
+                            btn.style.display = 'none';
+                        });
+
+                        saveNoteButton.style.display = 'inline-block';
+                        resetNoteButton.style.display = 'inline-block';
+
+                        addNoteButton.style.display = 'none';
+                    });
+                });
+
+
+                resetNoteButton.addEventListener('click', function () {
+
+                    noteTitleInput.value = '';
+                    noteContentTextarea.value = '';
+
+                    editButtons.forEach((btn) => {
+                        btn.style.display = 'block';
+                    });
+
+                    saveNoteButton.style.display = 'none';
+                    resetNoteButton.style.display = 'none';
+
+                    addNoteButton.style.display = 'block';
+                });
+            });
+        </script>
+
+    </body>
+</html>

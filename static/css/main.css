@@ -1,0 +1,708 @@
+* {
+    margin: 0;
+    padding: 0;
+    outline: none;
+    border: none;
+    box-sizing: border-box;
+    text-decoration: none;
+    font-family: 'Verdana', sans-serif;
+}
+
+body{
+    background: #dfe9f5;
+}
+
+.red {
+    color: red;
+}
+
+.blue {
+    color: blue;
+}
+
+.green {
+    color: green;
+}
+
+.white {
+    color: white;
+}
+
+.bg-red {
+    background-color: red;
+}
+
+.bg-green {
+    background-color: green;
+}
+
+/*thanh công cụ*/
+nav{
+    position: relative;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    height: 100vh;    
+    background: #fff;
+    width: 280px;
+    overflow: hidden;
+    box-shadow: 0 20px 35px rgba(0, 0, 0, 0.1);
+    display:block;
+}
+
+/*logo web*/
+.logo{
+    text-align: center;
+    display: flex;
+    margin: 30px 0 100px  10px;
+}
+
+.logo img{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+.logo span{
+    font-weight: bold;
+    padding-left: 15px;
+    font-size: 25px;
+
+}
+
+/*chức năng*/
+a{
+    position: relative;
+    color: rgb(85, 83, 83);
+    font-size: 17px;
+    display: table;
+    width: 280px;
+    padding: 10px;
+}
+
+nav .fas{
+    position: relative;
+    width: 70px;
+    height: 40px;
+    top: 14px;
+    font-size: 20px;
+    text-align: center;
+}
+
+.nav-item{
+    position: relative;
+    top: 12px;
+    margin-left: 10px;
+}
+
+a:hover{
+    background:#dfe9f5;
+}
+
+.logout{
+    position: absolute;
+    bottom: 0;
+}
+
+/*trang chủ*/
+.main{
+    position: relative;
+    padding: 30px;
+    width: 100%;
+}
+
+.main-top{
+    display: flex;
+    width: 100%;
+}
+
+.main-top h1{
+    font-size: 25px;
+}
+
+.list{
+    display:flex;
+    flex-wrap: wrap;
+}
+
+/*box ghi chú*/
+.content-index{
+    margin-top:20px ;
+    text-transform: capitalize;
+}
+
+.content-index {
+    width: 100%;
+    height: 295px;
+    padding: 10px 10px 30px 10px;
+    margin: 15px 5px ;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 20px 35px rgba(0, 0, 0, 0.1);
+    overflow: auto;
+}
+
+.content-index ul {
+    list-style: none;
+    display: flex;
+}
+
+.content-index ul li{
+    margin: 10px;
+    color: gray;
+    text-decoration: underline;
+    color:black;
+}
+
+.content-index .card-container-index{
+    display: flex;
+}
+
+.card-container-index {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    width: 100%;
+    background-color: transparent;
+    padding: 15px;
+    border-radius: 10px;
+}
+/*card ghi chú*/
+.card {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    width: 277px;
+    height: 185px;
+    box-sizing: border-box;
+    position: relative;
+    padding-bottom: 25px;
+    overflow: hidden;
+}
+/*nội dung ghi chú*/
+.contents{
+    padding: 5px 20px 5px 5px;
+    width: 285px;
+    box-sizing: border-box;
+    position: relative;
+    height: 145px;
+    overflow: auto;
+}
+
+/*box công việc + sự kiện*/
+.index{
+    margin-top:30px ;
+    text-transform: capitalize;
+}
+
+.index {
+    width: 48%;
+    height: 300px;
+    padding: 10px 10px 30px 10px;
+    margin: 10px 12px 15px 12px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 20px 35px rgba(0, 0, 0, 0.1);
+    overflow: auto;
+}
+
+.index ul {
+    list-style: none;
+    display: flex;
+}
+
+.index ul li{
+    margin: 10px;
+    color: gray;
+    text-decoration: underline;
+    color:black;
+}
+
+.index .card-todo{
+    display: flex;
+}
+
+.index .card-schedule{
+    display: flex;
+}
+
+/*box công việc*/
+.card-todo {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    width: 100%;
+    background-color: transparent;
+    padding: 15px;
+    border-radius: 10px;
+}
+
+.todo-card {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    width: 100%;
+    height: 80px;
+    box-sizing: border-box;
+    position: relative;
+    padding-bottom: 25px;
+    overflow: hidden;
+}
+
+/*box sự kiện*/
+.card-schedule {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    width: 100%;
+    background-color: transparent;
+    padding: 15px;
+    border-radius: 10px;
+}
+
+.schedule-card {
+    background:SteelBlue;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    width: 100%;
+    height: 80px;
+    box-sizing: border-box;
+    position: relative;
+    padding-bottom: 25px;
+    overflow: hidden;
+}
+
+
+/* Trang Ghi chú*/
+.top{
+    display: flex;
+    width: 100%;
+    margin: 5px 10px;
+}
+
+.top h1{
+    font-size: 25px;
+}
+
+.content-note {
+    display: flex;
+    flex-wrap: wrap;
+    position: relative;
+    padding: 20px;
+    width: 100%;
+    height: 100vh;
+}
+
+.container-note{
+    display: flex;
+}
+
+/*box chứa danh sách note*/
+.note-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    width: 40%;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    height: 87vh;
+    margin-top:10px ;
+    margin-right: 10px;
+    margin-left: 15px;
+    overflow: auto;
+}
+
+.note {
+    background-color: #fff;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    width: 218px;
+    box-sizing: border-box;
+    position: relative;
+    height: 220px;
+    overflow: hidden;
+}
+
+.content{
+    padding: 5px 20px 5px 5px;
+    width: 217px;
+    box-sizing: border-box;
+    position: relative;
+    height: 164px;
+    overflow-y:auto;
+}
+
+.delete-note {
+    border: none;
+    background-color: transparent;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+}
+
+.edit-note-button {
+    border: none;
+    background-color: transparent;
+    position: absolute;
+    top: 5px;
+    right: 20px;
+}
+
+.note h4 {
+    padding-right: 30px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#time {
+    position:absolute;
+    bottom: 5px;
+    left: 5px;
+}
+
+/*form thêm ghi chú*/
+.form-add-note {
+    display: flex;
+    flex-wrap: wrap;
+    height: 87vh;
+    padding: 10px;
+    border-radius: 10px;
+    width: 55%;
+    background: white;
+    margin-top:10px ;
+    margin-right: 10px;
+    margin-left: 20px;
+}
+/*tiêu đề thêm ghi chú*/
+#note-title,
+#note-title::placeholder {
+    margin: 5px;
+    margin-bottom: 5px;
+    width: 99%;
+    background: lightgrey;
+    color: black;
+    padding: 5px;
+    border-radius: 5px;
+    outline: none;
+
+}
+
+#note-title{
+    background-color: transparent;
+    color: black;
+}
+/*nội dung thêm ghi chú*/
+#note-content {
+    margin-top: 0px;
+    margin: 10px 10px;
+    width: 99%;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 5px;
+    background:Silver;
+    color: black;
+    outline: none;
+    min-height: 70%;
+}
+
+#note-content::placeholder {
+    color: white;
+}
+/*thêm, lưu, hủy ghi chú*/
+#create-note {
+    border: none;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+.save-note-button,
+#add-note-button,
+#reset-note {
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    margin-left: 11px;
+}
+
+/*Công việc*/
+.content-task {
+    display: flex;
+    flex-wrap: wrap;
+    position: relative;
+    padding: 20px;
+    width: 100%;
+    height:100%;
+}
+
+.task-container {
+    display: inline-block;  
+    width: 40%;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    height: 87vh;
+    margin-top:10px ;
+    margin-right: 10px;
+    margin-left: 15px;
+    overflow: auto;
+}
+
+.task h4 {
+    margin: 0 0 5px 0;
+    padding-right: 30px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.task {
+    background-color: #fff;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 5px 5px 10px 4px;
+    width: 455px;
+    box-sizing: border-box;
+    position: relative;
+    height: 75px;
+    padding-bottom: 15px;
+}
+
+.delete-task {
+    border: none;
+    background-color: transparent;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+}
+
+.edit-task-button {
+    border: none;
+    background-color: transparent;
+    position: absolute;
+    top: 5px;
+    right: 20px;
+}
+
+.form-add-task {
+    padding: 10px;
+    border-radius: 10px;
+    width: 55%;
+    background: white;
+    margin-top:10px ;
+    margin-right: 10px;
+    margin-left: 20px;
+    height: 87vh;
+}
+
+#task-title,
+#task-title::placeholder {
+    margin: 5px;
+    margin-bottom: 5px;
+    width: 99%;
+    background: lightgrey;
+    color: black;
+    padding: 5px;
+    border-radius: 5px;
+    outline: none;
+}
+
+#task-content {
+    margin: 10px 0;
+    width: 100%;
+    border: none;
+    padding: 5px;
+    border-radius: 5px;
+    background-color: gray;
+    color: white;
+    outline: none;
+    min-height: 50%;
+}
+
+#create-task {
+    border: none;
+    padding: 10px;
+    margin-left: 7px;
+    border-radius: 5px;
+}
+
+#task-status {
+    margin: 10px 0;
+}
+
+/*Sự kiện*/
+.container-event {
+    display: flex;
+    flex-wrap: wrap;
+    position: relative;
+    padding: 20px;
+    width: 100%;
+    height:100%;
+}
+
+.schedules-container {
+    display: inline-block;
+    width: 20%;   
+    padding: 10px;
+    background: white;
+    border-radius: 10px;
+    height: 87vh;
+    margin-top:10px ;
+    margin-right: 10px;
+    margin-left: 15px;
+    overflow: auto;
+}
+
+.schedules {
+    background: SteelBlue;
+    padding: 5px;
+    margin: 5px;
+    position: relative;
+    border-radius: 5px;
+}
+
+.calendar {
+    position: relative;
+    text-align: center;
+    /* Để căn giữa nút "Thêm sự kiện" */
+    width: 75%;
+    display: inline-block;
+    margin-left: 20px;
+    background: white;
+    padding: 10px;
+    border-radius: 10px;
+    margin-top:10px ;
+    margin-right: 10px;
+    height: 87vh;
+}
+
+/* Thêm CSS cho bảng lịch và phủ toàn bộ màn hình */
+#calendar-table {
+    width: 98%;
+    border-collapse: collapse;
+    height: 65vh;
+    margin: 0 10px 10px 10px;
+}
+
+.calendar-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+/* Thêm CSS cho ô ngày trong bảng lịch */
+.calendar-day {
+    width: 14%;
+    height: 20%;
+    background: white;
+    text-align: center;
+    padding: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    border: 1px solid black;
+    overflow:hidden;
+}
+
+/* Thêm CSS cho ô ngày khi hover */
+.calendar-day:hover {
+    background: CornflowerBlue;
+    color: white;
+}
+
+.event-day {
+    background: LightBlue;
+    color: white;
+    font-weight: bold;
+    width: 14%;
+    height: 20%;
+    overflow:hidden;
+}
+
+/* CSS cho form thêm sự kiện */
+.event-form {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    box-shadow: 0 0 5px black;
+    padding: 20px;
+    border-radius: 5px;
+    display: none;
+    z-index: 999;
+}
+
+.event-form h2 {
+    text-align: center;
+}
+
+.event-form input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.event-form button[type="submit"] {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background: green;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#close-event-form {
+    position: absolute;
+    background-color: transparent;
+    top: 5px;
+    right: 5px;
+    color: black;
+    border: none;
+}
+
+/* Thêm CSS cho nút "Thêm sự kiện" */
+#add-event-button {
+    display: block;
+    margin: 20px auto;
+    padding: 10px 20px;
+    background-color: green;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#prev-month,
+#next-month {
+    border: none;
+    background-color: transparent;
+    font-size: 1.4rem;
+    padding: 5px;
+    margin: 5px;
+    border-radius: 5px;
+}
+
+#prev-month:hover,
+#next-month:hover {
+    color: blue;
+}
+
+.delete-event {
+    position: absolute;
+    border: none;
+    background-color: transparent;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+}
